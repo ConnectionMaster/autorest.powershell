@@ -4,11 +4,9 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { codeModelSchema, CodeModel, ObjectSchema, ConstantSchema, GroupSchema, isObjectSchema, SchemaType, GroupProperty, ParameterLocation, Operation, Parameter, ImplementationLocation, OperationGroup, Request, SchemaContext } from '@azure-tools/codemodel';
-//import { VirtualParameter } from '@azure-tools/codemodel-v3';
 import { getPascalIdentifier, removeSequentialDuplicates, pascalCase, fixLeadingNumber, deconstruct, selectName, EnglishPluralizationService, serialize } from '@azure-tools/codegen';
 import { length, values, } from '@azure-tools/linq';
 import { Host, Session, startSession } from '@azure-tools/autorest-extension-base';
-//import { CommandOperation } from '@azure-tools/codemodel-v3/dist/code-model/command-operation';
 import { CommandOperation } from '../utils/command-operation';
 import { PwshModel } from '../utils/PwshModel';
 import { ModelState } from '../utils/model-state';
@@ -45,6 +43,10 @@ function getNameOptions(typeName: string, components: Array<string>) {
 
 
 function createVirtualProperties(schema: ObjectSchema, stack: Array<string>, threshold: number, conflicts: Array<string>) {
+  // Some properties should be removed are wrongly kept as null and need to clean them
+  if (schema.properties) {
+    schema.properties = schema.properties.filter(each => each);
+  }
   // dolauli
   //    owned: all properties(obj & nonobj) in the schema,
   //  inherited: Properties from parents,
@@ -128,7 +130,8 @@ function createVirtualProperties(schema: ObjectSchema, stack: Array<string>, thr
         originalContainingSchema: virtualProperty.originalContainingSchema,
         description: virtualProperty.description,
         alias: [],
-        required: virtualProperty.required || !!values(<Array<any>>virtualProperty.originalContainingSchema.properties).first(each => !!each && !!each.required && !!each.serializedName && each.serializedName.toLowerCase() === virtualProperty.property.language.default.name.toLowerCase()),
+        readOnly: virtualProperty.readOnly,
+        required: virtualProperty.required,
         sharedWith: virtualProperty.sharedWith,
       };
       // add it to the list of virtual properties that share this property.

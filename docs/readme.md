@@ -4,7 +4,7 @@
 
 Use of the beta version of `autorest.powershell` requires the following:
 
-- [NodeJS LTS](https://nodejs.org) (10.15.x LTS preferred. Will not function with Node < 10.x Be Wary of 11.x builds as they may introduce instability or breaking changes. ) 
+- [NodeJS LTS](https://nodejs.org) (14.x LTS preferred. Will not function with Node < 10.x. ) 
 > if you want an easy way to install and update Node, I recommend [NVS - Node Version Switcher](../nodejs/installing-via-nvs.md) or [NVM - Node Version Manager](../nodejs/installing-via-nvm.md)
 
 - [AutoRest](https://aka.ms/autorest) v3 <br> `npm install -g autorest ` <br>&nbsp;
@@ -69,7 +69,7 @@ The output will be in the `./generated` folder by default
 - [Samples](./samples/readme.md) demonstrate some example usage for generating cmdlets. 
 - [Options](./options.md) details about some of the configuration options for manipulating the cmdlet generation process.
 - [Release Notes](./release-notes.md) information about the current build.
-- [Filing Bugs](https://githunb.com/azure/autorest) make sure that you tag it with the 'powershell' label.
+- [Filing Bugs](https://github.com/azure/autorest) make sure that you tag it with the 'powershell' label.
 - [Command-line-interface](../user/command-line-interface.md) - about the autorest command line
 - [Configuration Files](../user/configuration.md)
 - **Coming Soon**: [Debugging](./debugging-modules.md) modules with VSCode made easy.
